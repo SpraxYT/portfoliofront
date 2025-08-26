@@ -1,11 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+import { getCategories } from './directusClient';
 function App() {
   const [count, setCount] = useState(0)
+  const [categories, setCategories] = useState([]);
+  
+  // Use useEffect to fetch categories when component mounts
+  useEffect(() => {
+    async function fetchCategories() {
+      const result = await getCategories();
+      setCategories(result);
+    }
+    
+    fetchCategories();
+  }, []);
 
+  
   return (
     <>
       <div>
