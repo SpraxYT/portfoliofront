@@ -1,18 +1,15 @@
-# Dockerfile
-FROM node:20-alpine
+FROM node:22-alpine
 
-# Crée le dossier de l'app
 WORKDIR /app
 
-# Copie package.json et installe les deps
+# Forcer le registry public pour éviter le 403
+RUN npm config set registry https://registry.npmjs.org/
+
 COPY package*.json ./
 RUN npm install
 
-# Copie le reste du projet
 COPY . .
 
-# Expose le port Vite
 EXPOSE 5173
 
-# Commande pour dev
 CMD ["npm", "run", "dev", "--", "--host"]
